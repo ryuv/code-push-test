@@ -1,0 +1,35 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '10.0'
+
+target 'update_test' do
+  config = use_native_modules!
+   # CodePush plugin dependency
+   pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
+  use_react_native!(:path => config["reactNativePath"])
+
+  target 'update_testTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable these next few lines.
+  use_flipper!
+  post_install do |installer|
+    flipper_post_install(installer)
+  end
+end
+
+target 'update_test-tvOS' do
+  # Pods for update_test-tvOS
+
+  target 'update_test-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+end
